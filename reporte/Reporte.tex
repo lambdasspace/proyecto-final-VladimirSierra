@@ -17,8 +17,7 @@
 
 
 % Title
-\title{
-    The Knigh's Tour }
+\title{The Knigh's Tour Problem}
 \author{Sierra Casiano Vladimir}
 
 % Document
@@ -28,12 +27,52 @@
     
     \section{Introducci'on.}
 
+    Un problema muy estudiado a lo largo de la historia es el del Tour del caballero.
+    Muchas soluciones han sido propuestas con diferentes enfoques. En el presente
+    documento se presentan dos maneras diferentes de resolverlo, utilizando los dos paradigmas de
+    la programaci'on declarativa.
+
+
     \section{Preliminares.}
 
     \subsection{Definici'on del problema.}
+    La pieza del caballo en el ajedrez tiene un movimiento `en L' \; como
+    se ilustra a continuaci'on.
+
+    El problema que queremos resolver es, dada una posici'on inicial y un tama'no del tablero,
+    encontrar la distancia m'as larga de un camino v'alido del caballo.
+
     \subsection{Algoritmos Gen'eticos.}
+    Los algoritmos gen'eticos est'an inspirados en el comportamiento de
+    agentes biol'ogicos.
+
+    El algoritmo Bee Colony fue propiesto en el a'no por el investigador InvestigadorName,
+    y el funcionamiento intuitivo es el siguiente.
+
+    \begin{itemize}
+        \item Inicializar
+        \item Generar fuentes de comida
+        \item Dada la funci'on tomar la m'as opcima.
+    \end{itemize}
+
+    \subsection{Ventajas de usar Programaci'on Declarativa.}
 
     \section{Soluci'on.}
+
+    \subsection{Soluci'on con Prolog.}
+    La primera soluci'on propuesta es utilizando una b'usqueda BFS.
+    El 'arbol de posibles movimientos y el backtracking es manejado
+    gracias al no determinismo de Prolog.
+
+    Los movimientos est'an definidos por la forma `L' \; por lo tanto, deben de cumplir
+    que
+    \begin{itemize}
+        \item La distancia entre
+        \item Los valores nuevos est'an en un rango entre 1 y n.
+    \end{itemize}
+
+    \subsection{Soluci'on con Haskell.}
+
     \section{Implementaci'on}
     
     \section{Conclusiones}
