@@ -1,17 +1,18 @@
+find_max_lenght( PosInicial, N , Z):-
+    aggregate_all(max(X), max_length_path([], PosInicial, N, X), Z ).
+
 max_length_path(Visited, Pos, N, Lenght):-
     next_mov(Visited, Pos, N, NewPos),
-    max_length_path( [NewPos|Visited] , NewPos, N, New_lenght),
+     max_length_path( [NewPos|Visited] , NewPos, N, New_lenght),
     Lenght is New_lenght + 1.
 
 max_length_path(Visited, Pos, N, Lenght):-
-    \+ next_mov(Visited, Pos, N, NewPos),
+    \+ next_mov(Visited, Pos, N, _),
     Lenght = 0.
 
 
-% Predicado que recibe la posicion inicial y calcula el camino mas largo del caballo
-solve_problem( (1,2), Result):-
-    max_length_path([], Pos, 0).
-
+% Predicado que es true si Visited es la lista de posiciones visitadas, Pos es la posicion actual, N el tamanio del lado
+% del tablero y NewPos es una posicion a la que se llega con un movimiento valido.
 next_mov( Visited, Pos, N, NewPos) :-
     movimiento_valido(Pos, N, NewPos),
     not(member(NewPos, Visited)).
