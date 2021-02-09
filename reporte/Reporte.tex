@@ -54,6 +54,20 @@
         \item Generar fuentes de comida
         \item Dada la funci'on tomar la m'as opcima.
     \end{itemize}
+    \vspace{4mm}
+
+    Los componentes para Bee Colony son:
+    \begin{itemize}
+        \item Una fuente de comida representa una solici'on posible para el problema.
+        \item La funci'on fitness, que evalua la calidad de una fuente de comida.
+    \end{itemize}
+
+    \textbf{Metodolog'ia}
+    \begin{itemize}
+        \item El n'umero de employed bees es igual al n'umero de fuentes de comida.
+        \item Se generan K fuentes de comida de manera aleatoria.
+    \end{itemize}
+
 
     \subsection{Ventajas de usar Programaci'on Declarativa.}
 
@@ -71,8 +85,19 @@
         \item Los valores nuevos est'an en un rango entre 1 y n.
     \end{itemize}
 
-    \subsection{Soluci'on con Haskell.}
+    Con prolog hacemos una b'usqueda DFS, y al final tomamos
+    la longitud mayor de alguno de los caminos.
 
+    \subsection{Soluci'on con Bee Colony.}
+
+    La segunda soluci'on tiene la siguiente adaptaci'on.
+    Los 8 posibles movimientos se identificar'an con un n'umero:
+    \begin{itemize}
+        \item Movimiento 1.
+    \end{itemize}
+
+    Los movimientos ser'an secuencias de estos 8 identificadores.
+    Por ejemplo, la secuencia 1, 3, 6 corresponde a.
     \section{Implementaci'on}
     
     \section{Conclusiones}
