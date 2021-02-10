@@ -22,3 +22,21 @@ fitness_value_aux([H|T] , Visited,  PosInicial, N, Z):-
 fitness_value_aux([H|_] , Visited,  PosInicial, N,  Z):-
     \+ valid_move([PosInicial|Visited], PosInicial, H, N , _),
     Z is 0.
+
+take(0, _, []) :- !.
+take(N, [H|TA], [H|TB]) :-
+    N > 0,
+    N2 is N - 1,
+    take(N2, TA, TB).
+
+drop(0,LastElements,LastElements) :- !.
+drop(N,[_|Tail],LastElements) :-
+    N > 0,
+    N1 is N  - 1,
+    drop(N1,Tail,LastElements).
+
+take_sublist(Begin,End, List, Z ):-
+    B2 is Begin - 1,
+    E2 is End - Begin + 1,
+    drop(B2, List, Z1),
+    take(E2, Z1, Z).
