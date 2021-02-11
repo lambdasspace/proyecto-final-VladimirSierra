@@ -49,16 +49,9 @@ update_all_solutions([H|T], Complete_list, N, Longitud, Pos_inicial,  Z):-
     update_all_solutions(T, Complete_list, N, Longitud, Pos_inicial, Z1),
     delete(Complete_list,H, L1),
     random_member(X, L1),
-    merge_solution(H, X, Longitud, H1),
-    %- calculamos el fitness value de la secuancia antes de ser modificada
-    fitness_value(H, Pos_inicial, N, F1),
-    %- obtenemos el fitness value de la secuencia modificada
-    fitness_value(H1, Pos_inicial, N, F2),
-    %- nos quedamos con la secuencia con mayor fitness value
-    (
-        F1 < F2 -> Z = [H1|Z1] ;
-        Z = [H|Z1]
-    ).
+    %-- hacemos el merge de ambas secuencias y decidimos greedy
+    take_best_merge(H,X,N, Pos_inicial, H1),
+    Z = [H1|Z1].
 
 
 

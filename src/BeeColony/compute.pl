@@ -50,3 +50,38 @@ replace(K, [H|T], X , Z):-
     K2 is K -1,
     replace(K2, T, X, T1),
     Z = [H|T1].
+
+
+%-- Predicado que es true si Z es un par donde el primer elemento es el maximo fitness value y el segundo elemento
+% -- es el camino asociado a ese maximo fitness value
+path_with_max_fitness([Sequence], N, Pos_inicial, Z):-
+    fitness_value(Sequence, Pos_inicial, N, Fit_value),
+    Z = ( Fit_value, Sequence).
+
+path_with_max_fitness([H|T], N, Pos_inicial, Z):-
+    path_with_max_fitness(T, N, Pos_inicial, (Curret_fit , Current_seq) ),!,
+    fitness_value(H, Pos_inicial, N, Fit_value),
+    (
+        Fit_value > Curret_fit -> Z =  (Fit_value, H);
+        Z = (Curret_fit, Current_seq)
+    ).
+
+%- Predicado que es true si Z es la suma de todos los fitnes value asociados a las secuencias en la lista [H|T]
+sum_all_fit_values([], _, _, 0).
+sum_all_fit_values([H|T], N, Pos_inicial, Z):-
+    sum_all_fit_values(T, N, Pos_inicial, Z1),!,
+    fitness_value(H, Pos_inicial, N, Fit1),
+    Z is Z1 + Fit1.
+
+take_best_merge(Seq1, Seq2, N, Pos_inicial, New_seq):-
+    Longitud is N * N -1,
+    merge_solution(Seq1, Seq2, Longitud, Seq3),
+    %- calculamos el fitness value de la secuancia antes de ser modificada
+    fitness_value(Seq1, Pos_inicial, N, F1),
+    %- obtenemos el fitness value de la secuencia modificada
+    fitness_value(Seq3, Pos_inicial, N, F2),
+    %- nos quedamos con la secuencia con mayor fitness value
+    (
+        F1 < F2 -> New_seq = Seq3 ;
+        New_seq = Seq1
+    ).

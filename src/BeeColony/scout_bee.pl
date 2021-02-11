@@ -1,26 +1,36 @@
 :- [movements].
 :- [compute].
 
-scout_bee_job(Secuence, N, Pos_inicial, New_secuence):-
-    extend_solution(Secuence, N, Pos_inicial, New_secuence),!.
+scout_bees_job(L, N, Pos_inicial, Z):-
+    path_with_max_fitness(L, N, Pos_inicial, (Limit,_) ),
+    scout_job_aux(L, N, Pos_inicial, Limit, Z).
 
-scout_bee_job(Secuence, N, Pos_inicial, New_secuence):-
-    \+ extend_solution(Secuence, N, Pos_inicial, _),
+scout_job_aux([], _ , _, _, []).
+scout_job_aux([H|T], N, Pos_inicial, Limit, Z):-
+    scout_job_aux(T, N, Pos_inicial, Limit, Z1),
+    scout_update_sequence(H, N, Pos_inicial, Limit, H1),
+    Z = [H1| Z1].
+
+
+
+scout_update_sequence(Secuence, N, Pos_inicial, Limit, New_secuence):-
+    extend_solution(Secuence, N, Pos_inicial,Limit, New_secuence),!.
+
+scout_update_sequence(Secuence, N, Pos_inicial, Limit, New_secuence):-
+    \+ extend_solution(Secuence, N, Pos_inicial,Limit,  _),
     random_init(N, New_secuence).
 
 
 
-extend_solution(Sequence, N, Pos_inicial, New_sequence):-
+extend_solution(Sequence, N, Pos_inicial, Limit, New_sequence):-
     %- caso cuando el fitness value ya es el maximo.
-    Limit is N * N - 1,
     apply_sequence(Sequence, N,  (Pos_inicial, 0, [Pos_inicial]), (_, FV_final, _)),
     FV_final = Limit,
     New_sequence = Sequence.
 
 
-extend_solution(Sequence, N, Pos_inicial, New_sequence):-
+extend_solution(Sequence, N, Pos_inicial,Limit, New_sequence):-
     %- caso cuando se puede aumentar el fitness value actual
-    Limit is N * N - 1,
     apply_sequence(Sequence, N,  (Pos_inicial, 0, [Pos_inicial]), (Pos_final, FV_final, Visited_final)),
     FV_final < Limit,
     %- Obtenemos el primer movimiento invalido
