@@ -40,3 +40,13 @@ take_sublist(Begin,End, List, Z ):-
     E2 is End - Begin + 1,
     drop(B2, List, Z1),
     take(E2, Z1, Z).
+
+
+%- Predicado que es true si Z es el resultado de reemplaza en la lista [H|T] el elemento en
+%- la posicion K con el valor X.
+replace(0, [_|T], X, [X|T]):- !.
+replace(K, [H|T], X , Z):-
+    K > 0,
+    K2 is K -1,
+    replace(K2, T, X, T1),
+    Z = [H|T1].
