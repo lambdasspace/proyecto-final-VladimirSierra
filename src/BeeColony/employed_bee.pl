@@ -47,7 +47,7 @@ employed_bees_job(L, N, Pos_inicial,  Z):-
 update_all_solutions([],_, _, _, _, []).
 update_all_solutions([H|T], Complete_list, N, Longitud, Pos_inicial,  Z):-
     update_all_solutions(T, Complete_list, N, Longitud, Pos_inicial, Z1),
-    delete(Complete_list,H, L1),
+    delete_one( H, Complete_list, L1),
     random_member(X, L1),
     %-- hacemos el merge de ambas secuencias y decidimos greedy
     take_best_merge(H,X,N, Pos_inicial, H1),

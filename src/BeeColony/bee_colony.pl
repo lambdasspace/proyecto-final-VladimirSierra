@@ -17,7 +17,7 @@ bee_alg_aux(Partial_solutions, N, Pos_inicial, Repeticiones, Z):-
     Repeticiones > 1,
     R2 is Repeticiones - 1,
     employed_bees_job(Partial_solutions, N, Pos_inicial,  Z1),
-    onlooker_bees_job(Z1, N, Pos_inicial,  Z2),
+    onlooker_bees_job(Z1, N, Pos_inicial,  Z2),!,
     scout_bees_job(Z2, N, Pos_inicial,  Z3),
     %- onlooker_bee_job(),
     %- scout_bee_job(),

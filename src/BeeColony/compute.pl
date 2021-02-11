@@ -7,6 +7,9 @@ random_init(N, Z):-
     length(Z, Longitud),
     maplist( random(1,9), Z).
 
+random_list(K, Z):-
+    length(Z, K),
+    maplist( random(1,9), Z).
 
 %- Predicado que es true si Z es el valor que toma la funcion fitness para la secuencia S
 fitness_value(S, PosInicial, N,  Z):-
@@ -66,6 +69,14 @@ path_with_max_fitness([H|T], N, Pos_inicial, Z):-
         Z = (Curret_fit, Current_seq)
     ).
 
+
+%-- Predicado que es True si
+get_all_fit_values([], _, _, []).
+get_all_fit_values([H|T], N, Pos_inicial, Z):-
+    get_all_fit_values(T, N, Pos_inicial, Z1),
+    fitness_value(H, Pos_inicial, N, Fit1),
+    Z = [Fit1|Z1].
+
 %- Predicado que es true si Z es la suma de todos los fitnes value asociados a las secuencias en la lista [H|T]
 sum_all_fit_values([], _, _, 0).
 sum_all_fit_values([H|T], N, Pos_inicial, Z):-
@@ -85,3 +96,8 @@ take_best_merge(Seq1, Seq2, N, Pos_inicial, New_seq):-
         F1 < F2 -> New_seq = Seq3 ;
         New_seq = Seq1
     ).
+
+delete_one(X, [X|T],T):- !.
+delete_one(X,[H|T],Z):-
+    delete_one(X,T, Z1),
+    Z = [H|Z1].

@@ -26,13 +26,17 @@ extend_solution(Sequence, N, Pos_inicial, Limit, New_sequence):-
     %- caso cuando el fitness value ya es el maximo.
     apply_sequence(Sequence, N,  (Pos_inicial, 0, [Pos_inicial]), (_, FV_final, _)),
     FV_final = Limit,
-    New_sequence = Sequence.
+    Limit \= 0,
+    take_sublist(1,FV_final, Sequence, Z1),
+    Rest is N * N -1 - FV_final,
+    random_list(Rest, Z2),
+    append(Z1,Z2,New_sequence).
 
 
 extend_solution(Sequence, N, Pos_inicial,Limit, New_sequence):-
     %- caso cuando se puede aumentar el fitness value actual
     apply_sequence(Sequence, N,  (Pos_inicial, 0, [Pos_inicial]), (Pos_final, FV_final, Visited_final)),
-    FV_final < Limit,
+    (FV_final < Limit ; Limit == 0),
     %- Obtenemos el primer movimiento invalido
     nth0(FV_final, Secuense, Replace ),
     %- Buscamos un patro de movimiento distinto para aumentar el futness value
