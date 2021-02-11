@@ -1,6 +1,18 @@
 :-[compute].
+%- Predicado que es true si N es un numero natural y Z es la lista que guarda la representacion de una fuente de comida.
+generate_employed_bees(1, N, Z):-
+    random_init(N, Z1),!,
+    Z = [Z1].
 
-update_solution(Old_solution, Neighboring_solution, Longitud, New_solution):-
+generate_employed_bees(Num_emp_bees, N, Z):-
+    Num_emp_bees > 1,
+    Num2 is Num_emp_bees - 1,
+    generate_employed_bees(Num2, N, Z1),
+    random_init(N, Z2),
+    Z = [Z2 | Z1].
+
+
+merge_solution(Old_solution, Neighboring_solution, Longitud, New_solution):-
     %- primero generamos los tres puntos random de corte
     generate_cut_points(Longitud, [P1,P2,P3]),
     %- algunos valores auxiliares
@@ -26,3 +38,33 @@ generate_cut_points(Longitud, Z):-
         R1 \= R3 -> sort([R1,R2,R3],Z) ;
         generate_cut_points(Longitud, Z)
     ).
+
+
+employed_bees_job(L, N, Pos_inicial,  Z):-
+    Longitud is N * N - 1,
+    update_all_solutions(L,L,N, Longitud,Pos_inicial, Z).
+
+update_all_solutions([],_, _, _, _, []).
+update_all_solutions([H|T], Complete_list, N, Longitud, Pos_inicial,  Z):-
+    update_all_solutions(T, Complete_list, N, Longitud, Pos_inicial, Z1),
+    delete(Complete_list,H, L1),
+    random_member(X, L1),
+    merge_solution(H, X, Longitud, H1),
+    %- calculamos el fitness value de la secuancia antes de ser modificada
+    fitness_value(H, Pos_inicial, N, F1),
+    %- obtenemos el fitness value de la secuencia modificada
+    fitness_value(H1, Pos_inicial, N, F2),
+    %- nos quedamos con la secuencia con mayor fitness value
+    (
+        F1 < F2 -> Z = [H1|Z1] ;
+        Z = [H|Z1]
+    ).
+
+
+
+
+
+
+
+
+
