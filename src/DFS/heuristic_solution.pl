@@ -1,6 +1,6 @@
 :- set_prolog_flag(answer_write_options,[max_depth(0)]).
 
-find_max_lenght( Pos_inicial, N , Z):-
+find_max_lenght(N, Pos_inicial, Z):-
     max_length_path([Pos_inicial], Pos_inicial, N, Length, Path),!,
     Z = (Length, [Pos_inicial|Path]).
 

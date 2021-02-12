@@ -12,6 +12,26 @@ cada casilla es visitada a lo más una vez.
 
 ## Como ejecutar el programa.
 
+#### Ejecucion de solucion con heuristica.
+
+1. Ingrese a la carpeta src/DFS.
+2. Ejecute en una terminal el comando
+
+        $> swipl heuristic_solution.pl
+        
+3. Las consultas se hacen con el predicado
+
+        find_max_length(N, Pos_inicial, Z).
+    
+    donde N es el tamaño del lado del tablero, Pos_inicial es la posicion
+    de inicio de la pieza siguiendo un formato de '(X,Y)'.
+    
+    Por ejemplo, para un tablero de 5x5 con casilla inicial la del centro
+    del tablero, la consulta es la siguiente
+    
+        ?- find_max_length(5, (3,3) , Z).
+        
+        
 #### Ejecucion de solucion con ABC.
 
 1. Ingrese a la carpeta src/BeeColony.
@@ -33,3 +53,4 @@ cada casilla es visitada a lo más una vez.
     agentes la consulta es la siguiente
     
         ?- bee_algorithm(3, (1,1) , 300 , 200, Z).
+
