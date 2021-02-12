@@ -1,3 +1,4 @@
+# IMPLEMENTACION AUN EN MODIFICACION. NO LA TOME EN CUENTA COMO ENTREGA FINAL.
 # The Knight's Tour
 
 ## Alumno: Sierra Casiano Vladimir
