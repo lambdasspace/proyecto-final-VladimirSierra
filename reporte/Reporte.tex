@@ -8,6 +8,7 @@
 \usepackage{amsmath}
 \usepackage[spanish,activeacute]{babel}
 \usepackage{setspace}
+\usepackage{biblatex}
 %---------------- Marco del doc y separacion entre lineas -----------------
 \usepackage[a4paper]{geometry}
 \geometry{top= 1 in,bottom = 1 in , left = 1 in, right = 1 in}
@@ -15,13 +16,19 @@
 %\geometry{top=2cm, bottom=2.0cm, left=2.5cm, right=2cm}
 % \linespread{1.3}
 
+%--- bibiliografia
+\addbibresource{bibliography/Anan.bib}
+\addbibresource{bibliography/Gulumbic2021.bib}
+\addbibresource{bibliography/Watkins.bib}
+
 
 %----- Para no poner sangria ----------------
 \setlength{\parindent}{0cm}
 
 
 % Title
-\title{The Knigh's Tour Problem}
+\title{Solución al Problema del Recorrido del Caballo
+    utilizando Artifitial Bee Colony.}
 \author{Sierra Casiano Vladimir}
 
 % Document
@@ -34,30 +41,45 @@
         Caballo.
         Se presentar'an dos maneras para encontrar soluciones
         'optimas, la primera es utilizando la regla de Warnsdorff, y la segunda
-        es adapatando el algoritmo bioinspirado Artifitial Bee Colony.
+        es adapatando el algoritmo bioinspirado Artifitial Bee Colony. Ambas
+        soluciones tendr'an un enfoque declarativo.
     \end{abstract}
-
-
-
-    
 
 
     \section{Preliminares.}
 
-    \subsection{The Knight's Tour Problem.}
+    \subsection{Problema del Recorrido del Caballo.}
 
 
-    Un problema muy estudiado a lo largo de la historia es el del Tour del caballero.
-    Muchas soluciones han sido propuestas con diferentes enfoques. En el presente
-    documento se presentan dos maneras diferentes de resolverlo, utilizando los dos paradigmas de
-    la programaci'on declarativa.
+    El problema data a mediados del Siglo VI en la India \cite{watkins} (muy cerca del
+    origen del ajedrez) y ha sido muy estudiado a lo largo de la historia por
+    celebres matem'aticos como
+    Leonard Euler, quien enunci'o el problema de la siguiente manera:
+    \textit{ ?`C'omo se pueden encontrar todas las secuencias de movimientos de
+    la pieza del caballo en un tablero de ajedrez de tal manera que cada casilla del
+    tablero es visitada exactamente una vez?
+    }  \cite{golumbic2021} \\
+    El problema es una instancia del m'as general
+    Problema del camino Hamiltoniano de la  Teor'ia de Gr'aficas.
+
+    A lo largo del tiempo varios enfoques han sido propuestas para
+    encontrar soluciones tales como la fuerza bruta, divide y vencer'as,
+    b'usqueda DFS con backtracking e incluso redes neuronales.
+    El problema es NP-completo, por lo que encontrar algoritmos eficientes
+    para dar soluciones sigue siendo un reto interesante.
+
+
 
     \subsection{Definici'on del problema.}
     La pieza del caballo en el ajedrez tiene un movimiento `en L' \; como
     se ilustra a continuaci'on.
 
-    El problema que queremos resolver es, dada una posici'on inicial y un tama'no del tablero,
-    encontrar la distancia m'as larga de un camino v'alido del caballo.
+
+
+    El problema que queremos resolver es, dada una posici'on inicial y el tama'no del tablero,
+    encontrar el camino m'as largo posible utilizando los movimientos del caballo
+    y visitando cada casilla a lo m'as una vez.
+
 
     \subsection{Algoritmos Gen'eticos.}
     Los algoritmos gen'eticos est'an inspirados en el comportamiento de
@@ -73,7 +95,7 @@
     \end{itemize}
     \vspace{4mm}
 
-    Los componentes para Bee Colony son:
+    Los componentes para Bee Colony son \cite{anan} :
     \begin{itemize}
         \item Una fuente de comida representa una solici'on posible para el problema.
         \item La funci'on fitness, que evalua la calidad de una fuente de comida.
@@ -122,5 +144,7 @@
 
     \section{Trabajo futuro.}
 
+    \section{Bibliograf'ia}
+    \printbibliography
 
 \end{document}
