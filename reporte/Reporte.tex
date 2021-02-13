@@ -2,18 +2,22 @@
 %! Date = 05/02/21
 
 % Preamble
-\documentclass[11pt]{article}
+\documentclass[12pt]{article}
 
 % Packages
 \usepackage{amsmath}
 \usepackage[spanish,activeacute]{babel}
-
-
+\usepackage{setspace}
 %---------------- Marco del doc y separacion entre lineas -----------------
 \usepackage[a4paper]{geometry}
-\geometry{top=2cm, bottom=2.0cm, left=2.5cm, right=2cm}
-\linespread{1.3}
+\geometry{top= 1 in,bottom = 1 in , left = 1 in, right = 1 in}
+\doublespacing
+%\geometry{top=2cm, bottom=2.0cm, left=2.5cm, right=2cm}
+% \linespread{1.3}
 
+
+%----- Para no poner sangria ----------------
+\setlength{\parindent}{0cm}
 
 
 % Title
@@ -24,16 +28,29 @@
 \begin{document}
 
     \maketitle
+
+    \begin{abstract}
+        Para el presente proyecto se abordar'a una variante del Problema del Recorrido del
+        Caballo.
+        Se presentar'an dos maneras para encontrar soluciones
+        'optimas, la primera es utilizando la regla de Warnsdorff, y la segunda
+        es adapatando el algoritmo bioinspirado Artifitial Bee Colony.
+    \end{abstract}
+
+
+
     
-    \section{Introducci'on.}
+
+
+    \section{Preliminares.}
+
+    \subsection{The Knight's Tour Problem.}
+
 
     Un problema muy estudiado a lo largo de la historia es el del Tour del caballero.
     Muchas soluciones han sido propuestas con diferentes enfoques. En el presente
     documento se presentan dos maneras diferentes de resolverlo, utilizando los dos paradigmas de
     la programaci'on declarativa.
-
-
-    \section{Preliminares.}
 
     \subsection{Definici'on del problema.}
     La pieza del caballo en el ajedrez tiene un movimiento `en L' \; como
@@ -101,6 +118,9 @@
     Por ejemplo, la secuencia 1, 3, 6 corresponde a.
     \section{Implementaci'on}
     
-    \section{Conclusiones}
+    \section{Conclusiones.}
+
+    \section{Trabajo futuro.}
+
 
 \end{document}
