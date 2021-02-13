@@ -14,7 +14,7 @@
 \geometry{top= 1 in,bottom = 1 in , left = 1 in, right = 1 in}
 \doublespacing
 %\geometry{top=2cm, bottom=2.0cm, left=2.5cm, right=2cm}
-% \linespread{1.3}
+%- \linespread{1.3}
 
 %--- bibiliografia
 \addbibresource{bibliography/Watkins.bib}
@@ -24,6 +24,11 @@
 
 %----- Para no poner sangria ----------------
 \setlength{\parindent}{0cm}
+
+%-- para las imagenes
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{ {./images/} }
 
 
 % Title
@@ -64,7 +69,7 @@
 
     A lo largo del tiempo varios enfoques han sido propuestas para
     encontrar soluciones tales como la fuerza bruta, divide y vencer'as,
-    b'usqueda DFS con backtracking e incluso redes neuronales.
+    b'usqueda DFS con backtracking e incluso redes neuronales \cite{anan}.
     El problema es NP-completo, por lo que encontrar algoritmos eficientes
     para dar soluciones sigue siendo un reto interesante.
 
@@ -73,7 +78,15 @@
     \subsection{Definici'on del problema.}
     La pieza del caballo en el ajedrez tiene un movimiento en forma de \textit{L} , como
     se ilustra a continuaci'on.
-
+    
+    \begin{figure}[H]
+        \centering
+        \fbox{
+            \includegraphics[scale = 0.6]{knight_move.png}
+        }
+        \caption{Posibles movimientos para el caballo.}
+        \label{fig:knight_move}
+    \end{figure}
 
 
 
@@ -82,66 +95,135 @@
     y visitando cada casilla a lo m'as una vez.
 
 
-    \subsection{Algoritmos Gen'eticos.}
+    \subsection{Artifitial Bee Colony.}
     Los algoritmos gen'eticos est'an inspirados en el comportamiento de
     agentes biol'ogicos.
 
     El algoritmo Bee Colony fue propiesto en el a'no por el investigador InvestigadorName,
     y el funcionamiento intuitivo es el siguiente.
 
+    \textbf{Componentes.}
     \begin{itemize}
-        \item Inicializar
-        \item Generar fuentes de comida
-        \item Dada la funci'on tomar la m'as opcima.
-    \end{itemize}
-    \vspace{4mm}
-
-    Los componentes para Bee Colony son \cite{anan} :
-    \begin{itemize}
-        \item Una fuente de comida representa una solici'on posible para el problema.
-        \item La funci'on fitness, que evalua la calidad de una fuente de comida.
+        \setlength\itemsep{0em}
+        \item Abejas, que se dividen en tres tipos: empleadas, observadoras y exploradoras.
+        \item Se tiene un mismo n'umero de abejas de cada tipo.
+        \item Fuentes de comida, que representa una posible soluci'on a el problema.
+        \item Cada abeja empleada es encargada de una fuente de comida (es decir, tenemos el mismo n'umero de fuentes
+                de comida que de abejas empleadas).
+        \item Hay una funci'on fitness, que eval'ua la calidad de una fuente de comida.
     \end{itemize}
 
-    \textbf{Metodolog'ia}
+    \textbf{Metodolog'ia.}
     \begin{itemize}
-        \item El n'umero de employed bees es igual al n'umero de fuentes de comida.
-        \item Se generan K fuentes de comida de manera aleatoria.
+        \item Se generan fuentes de comida de manera aleatoria.
+        \item Se repite un n'umero definido de veces los siguientes pasos
+            \begin{itemize}
+                \setlength\itemsep{0em}
+                \item Todas las abejas empleadas buscan una abeja compa'ra para compartir informaci'on y actualizar
+                    la fuente de comida.
+                \item Las abejas observadoras toman las fuentes de comida de las abejas empleadas, y seleccionan
+                    solo a algunas para actualizar su informaci'on.
+                \item Las abejas exploradoras toman las fuentes de comida y las inspeccionan. Si encuentran
+                alguna fuente de comida que no puede optimizarse m'as y que se encuentra por debajo de un l'imite
+                se descarta y se cambia por una nueva posici'on generada aleatoriamente.
+
+            \end{itemize}
+
     \end{itemize}
 
+    De manera resumida, las abejas empleadas actualizan todas las fuentes de comida, las observadoras
+    actualizan solo algunas soluciones (las m'as optimas al momento) y las exploradoras descartan soluciones
+    sub'optimas. Este proceso se repite un n'umero finito de veces y al final observamos
+    la soluci'on global.
 
     \subsection{Ventajas de usar Programaci'on Declarativa.}
 
+
+
+
     \section{Soluci'on.}
 
-    \subsection{Soluci'on con Prolog.}
-    La primera soluci'on propuesta es utilizando una b'usqueda BFS.
-    El 'arbol de posibles movimientos y el backtracking es manejado
-    gracias al no determinismo de Prolog.
+    \subsection{Representaci'on de la informaci'on.}
+    Para todos los m'etodos propuestos a continuaci'on es importante
+    entender c'omo estamos representando los distintos
+    elementos.
 
-    Los movimientos est'an definidos por la forma `L' \; por lo tanto, deben de cumplir
-    que
     \begin{itemize}
-        \item La distancia entre
-        \item Los valores nuevos est'an en un rango entre 1 y n.
+        \item La posici'on en el tablero es un par  $\mathbf{(X,Y)}$ , donde
+        $X$ es el n'umero de la columna y $Y$ el n'umero del rengl'on.
+        Ambos valores est'an en un ranto entre $1$ y $N$ (longitud
+        del lado del tablero). \\
+        Por ejemplo, para un tablero de $3\times 3$ los
+        pares para cada posici'on son los siguientes
+
+        \item Un recorrido se representa con una lista, donde cada elemento
+        es una posici'on del tablero. El orden en que se visitan las
+        posiciones se lee de izquierda a derecha en la lista.\\
+        Por ejemplo, dado el recorrido
+
+        su representaci'on es: $[ (1,1) \; ,\; (2,3),\; (3,1) ]$
+
     \end{itemize}
 
+    Algunos aspectos particulares de cada m'etodo ser'an nombrados
+    en su correspondiente secci'on.
+
+
+    \subsection{Tratando de resolver el problema con fuerza
+    bruta.}
+
+    La primera soluci'on propuesta es utilizando una b'usqueda DFS y backtracking.
+    La exploraci'on es exhaustiva, con DFS se est'an recorriendo todos los caminos posibles, el backtracking
+    es el encargado de volver a puntos anteriores.
+
+    El 'arbol de posibles movimientos y el backtracking es manejado
+    gracias a Prolog, pues el recorrido DFS corresponde
+    a la exploraci'on que hace Prolog en el 'arbol de resoluci'on.
+
+
+
     Con prolog hacemos una b'usqueda DFS, y al final tomamos
-    la longitud mayor de alguno de los caminos.
+    el recorrido con la mayor longitud.
 
-    \subsection{Soluci'on con Bee Colony.}
+    Explorar todos los caminos es inviable, para reducir el espacio
+    de b'usqueda (y entonces obtener resultados en un tiempo razonable)
+    se pueden utilizar muchos m'etodos, uno relativamente
+    simple es el descrito en la secci'on siguiente.
 
-    La segunda soluci'on tiene la siguiente adaptaci'on.
+
+
+    \subsection{Soluci'on con la regla de Warnsfort.}
+    La regla de Warnsfort es una heur'istica
+    muy famosa propuesta por Warnsfort en .
+
+
+    \subsection{Adaptando Artifitial Bee Colony para resolver el problema.}
+
+    El algoritmo ABC est'a planteado originalmente para problemas con valores continuos. Como nuestro problema es discreto
+    se deben realizan unas adaptaciones.
+
+
     Los 8 posibles movimientos se identificar'an con un n'umero:
     \begin{itemize}
         \item Movimiento 1.
         \item Movimiento 2.
     \end{itemize}
 
-    Los movimientos ser'an secuencias de estos 8 identificadores.
-    Por ejemplo, la secuencia 1, 3, 6 corresponde a.
-    \section{Implementaci'on}
 
-    Todas las implementaciones presentadas fueron realizadas en Prolog.
+    Las posibles  soluciones para un tablero de $N \times N$
+    se representan con una lista de longitud $(N^{2}) -1 $, donde
+    cada elemento de la lista es un n'umero entre $1$ y $8$.
+
+    La definici'on de nuestra funci'on fitness es la siguiente:
+    $$f(x) =  $$
+
+    Para actualizar la posici'on de una fuente de comida $V_{1}$, primero se
+    escoge aleatoriamente una fuente de comida distinta $V_{2}$ , el intercambio
+    de informaci'on se realiza obteniendo cuatro fragmentos como se ilustra en
+    la siguiente imagen
+
+    Los puntos de corte son escogidos aleatoriamente.
+
 
     \section{Conclusiones.}
     Como podemos observar en el an'alisis de resultados la fuerza bruta
@@ -168,6 +250,23 @@
     para saber si mejoran las soluciones.
     Realizar variantes queda fuera del alcance de este proyecto pero
     deben ser tomadas en cuenta para trabajos futuros.
+
+
+    \section{Disponibilidad de la implementaci'on.}
+
+    Todas las implementaciones presentadas fueron realizadas en Prolog.
+
+    \subsection{C'omo probar la implementaci'on.}
+
+    Los archivos relacionados al proyecto se encuentran disponibles
+    en el repositorio\\
+    \textbf{
+    https://github.com/ciencias-unam/proyecto-final-VladimirSierra
+    }
+
+    Le invitamos a leer el archivo README.md para
+    c'onocer las instrucciones precisas de ejecuci'on.
+
 
     %- Bibliografia
     \printbibliography
