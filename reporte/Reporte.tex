@@ -17,9 +17,9 @@
 % \linespread{1.3}
 
 %--- bibiliografia
-\addbibresource{bibliography/Anan.bib}
-\addbibresource{bibliography/Gulumbic2021.bib}
 \addbibresource{bibliography/Watkins.bib}
+\addbibresource{bibliography/Gulumbic2021.bib}
+\addbibresource{bibliography/Anan.bib}
 
 
 %----- Para no poner sangria ----------------
@@ -41,7 +41,7 @@
         Caballo.
         Se presentar'an dos maneras para encontrar soluciones
         'optimas, la primera es utilizando la regla de Warnsdorff, y la segunda
-        es adapatando el algoritmo bioinspirado Artifitial Bee Colony. Ambas
+        es adaptando el algoritmo bioinspirado Artifitial Bee Colony. Ambas
         soluciones tendr'an un enfoque declarativo.
     \end{abstract}
 
@@ -71,8 +71,9 @@
 
 
     \subsection{Definici'on del problema.}
-    La pieza del caballo en el ajedrez tiene un movimiento `en L' \; como
+    La pieza del caballo en el ajedrez tiene un movimiento en forma de \textit{L} , como
     se ilustra a continuaci'on.
+
 
 
 
@@ -139,12 +140,36 @@
     Los movimientos ser'an secuencias de estos 8 identificadores.
     Por ejemplo, la secuencia 1, 3, 6 corresponde a.
     \section{Implementaci'on}
-    
+
+    Todas las implementaciones presentadas fueron realizadas en Prolog.
+
     \section{Conclusiones.}
+    Como podemos observar en el an'alisis de resultados la fuerza bruta
+    resulta poco eficiente debido a la complejidad computacional del problema,
+    para valores muy peque'nos de n (longitud del lado del tablero)
+    el tiempo y poder de c'omputo requerido es inviable. \\
+    De los  dos m'etodos que se presentaron como alternativa
+    fue la implementaci'on de Artifitial Bee Colony la que dio mejores resultados,
+    encontrando caminos m'as largos que la heur'istica de Warnsdorff. \\
+
 
     \section{Trabajo futuro.}
+    Aunque los resultados obtenidos con el algoritmo ABC son satisfactorios
+    hay muchos casos para los que no se encuentra realmente el recorrido m'as largo posible.
+    Para mejorar los resultados se deben realizar modificaciones en alguno de los siguientes puntos
+    \begin{itemize}
+        \item Modificar el n'umero de agentes y el n'umero de iteraciones. De manera m'as general
+            encontrar las cotas apropiadas para estos
+            valores dependiendo del valor de la variable n.
+        \item Modificar la manera en que se comparte la informaci'on entre los agentes.
+    \end{itemize}
 
-    \section{Bibliograf'ia}
+    Ambos puntos requieren un an'alisis profundo, deben ser implementados y probados
+    para saber si mejoran las soluciones.
+    Realizar variantes queda fuera del alcance de este proyecto pero
+    deben ser tomadas en cuenta para trabajos futuros.
+
+    %- Bibliografia
     \printbibliography
 
 \end{document}
