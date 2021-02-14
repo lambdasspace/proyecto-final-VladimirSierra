@@ -28,6 +28,7 @@
 %-- para las imagenes
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{hyperref}
 \graphicspath{ {./images/} }
 
 
@@ -95,7 +96,7 @@
     y visitando cada casilla a lo m'as una vez.
 
 
-    \subsection{Artifitial Bee Colony.}
+    \subsection{Artifitial Bee Colony.}\label{section:bee_colony}
     Los algoritmos gen'eticos est'an inspirados en el comportamiento de
     agentes biol'ogicos.
 
@@ -136,12 +137,26 @@
     sub'optimas. Este proceso se repite un n'umero finito de veces y al final observamos
     la soluci'on global.
 
-    \subsection{Ventajas de usar Programaci'on Declarativa.}
+    \subsection{El papel de la Programaci'on Declarativa.}
+    Para las implementaciones de este proyecto se opt'o por el uso de Prolog, lenguaje que pertenece
+    al paradigma de la Programaci'on L'ogica. \\
+    En Prolog la informaci'on es manejada con hechos y reglas de producci'on.
+
+    Como observaremos en la secci'on ~\ref{section: desarrollo}, una considerable cantidad de operaciones
+    que se requieren para los algoritmos consisten en
+    \begin{itemize}
+        \item Verificar que se cumplan condiciones (por ejemplo, para mutar informaci'on).
+        \item Explorar varias posibilidades en un mismo punto (por ejemplo, explorar los posibles movimientos).
+    \end{itemize}
+
+    Ambas caracter'isticas est'an intimamente ligadas a la filosof'ia de Prolog, que nos regala la exploraci'on a trav'es
+    de su 'arbol de resoluci'on y adem'as tiene el bactracking ya implementado. De igual manera, el enfoque
+    procedimental de Prolog consiste en encontrar sustituciones para hacer verdaderos a los predicados.
 
 
 
 
-    \section{Desarrollo.}
+    \section{Desarrollo.}\label{section: desarrollo}
 
     \subsection{Representaci'on de la informaci'on.}
     Para todos los m'etodos propuestos a continuaci'on es importante
@@ -222,16 +237,34 @@
     se deben realizan unas adaptaciones.
 
 
-    Los 8 posibles movimientos se identificar'an con un n'umero:
-    \begin{itemize}
-        \item Movimiento 1.
-        \item Movimiento 2.
-    \end{itemize}
+    Los 8 patrones de movimiento del caballo se identificar'an con un n'umero:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.5]{id_move.png}
+        \caption{Identificadores de los patrones.}
+        \label{fig:id_move}
+    \end{figure}
+
 
 
     Las posibles  soluciones para un tablero de $N \times N$
     se representan con una lista de longitud $N^{2} -1 $, donde
     cada elemento de la lista es un n'umero entre $1$ y $8$.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.3]{food_source1.png}
+        \caption{Ejemplo de posible soluci'on para un tablero de $4\times 4$.}
+        \label{fig:food_source1}
+    \end{figure}
+
+    El significado operacional de esta secuencia es, dada la posici'on inicial, aplicar el patr'on de movimento
+    que se encuentra en la cabeza de la lista, una v'ez llegada a la posici'on destino aplicar el
+    patr'on de movimiento que guarda el siguiente elemento de la lsita. \\
+    Es claro que las listas pueden guardar movimientos inv'alidos, es decir, al aplicar
+    el patr'on de movimiento se regresa a una casilla previamente visitada o se sale del tablero. \\
+    El objetivo del algoritmo es entonces maximizar los movimientos v'alidos.
+
 
     \subsubsection{Funci'on fitness.}
 
@@ -250,25 +283,68 @@
     Observe que con esta definici'on entre m'as grande es el valor de la funci'on fitness m'as
     largo es el recorrido que representa la lista.
 
-    \subsubsection{Actualizaci'on de las soluciones.}
+    \subsubsection{Actualizaci'on de las soluciones.}\label{section: merge}
 
     Para actualizar la posici'on de una fuente de comida $V_{1}$, primero se
     escoge aleatoriamente una fuente de comida distinta $V_{2}$ , el intercambio
     de informaci'on se realiza obteniendo cuatro fragmentos como se ilustra en
     la siguiente imagen
 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.35]{merge.png}
+        \caption{Proceso de actualizaci'on de una fuente de comida.}
+        \label{fig:merge}
+    \end{figure}
+
+
     Los puntos de corte son escogidos aleatoriamente.\\
     Recuerde que en todo momento se mantiene una estrategia greedy, cuando la posici'on de una fuente de comida muta se comprueba
     si el valor de la funci'on fitness se incrementa o no, en caso de que no se incremente se descartan los cambios.
 
-    \subsubsection{Labor de las abejas empleadas.}
-
-    \subsubsection{Labor de las abejas observadoras.}
-
-    \subsubsection{Labor de las abejas exploradoras.}
 
     \subsubsection{Algoritmo.}
+    Como mencionamos en la secci'on ~\ref{section:bee_colony}, los trabajos realizados por los tres tipos de abejas
+    conforman un ciclo de ejecuci'on.
+
+    \textbf{Abejas empeladas.}\\
+    Todas las abejas tienen asociada una fuente de comida, de manera aleatoria escogen a una compa'nera y
+    actualizan la posici'on de su fuente de comida siguiendo el m'etodo descrito en la subsecci'on ~\ref{section: merge}.
+
+    \textbf{Abejas observadoras.}\\
+    Las abejas observadoras toman todas las fuentes de comida que tienen las empleadas, cada fuente
+    de comida tendr'a asociada una probabiliad para ser seleccionada.
+
+    La probabilidad de que una fuente de comida $V_i$ sea seleccionada est'a dada por la
+    siguiente funci'on
+    \begin{equation}\label{eq: selection_function}
+        g( V_i ) =  \dfrac{ f(V_i ) } { \displaystyle \sum_{ V_j \in S } f(V_j) }
+    \end{equation}
+
+    Donde $S$ es el conjunto de todas las fuentes de comida y $f$ es la funci'on fitness.
+
+    \textbf{Abejas exploradoras.}\\
+    Las abejas exploradoras toman todas las fuentes de comida (despu'es de que las observadoras hayan realizado
+    sus modificaciones), observan cu'al es el valor m'as grande que toma la funci'on fitness en ese momento para alguna fuente
+    de comida,
+    llamemos $fit_{max}$ este valor, y para todas las fuentes de comida cuyo
+    valor fitness asociado sea menor a $fit_{max}$ se trata de extender la soluci'on.\\
+    Observe que el valor fitness nos indica la cantidad de movimientos v'alidos, por lo que
+    para una fuente de comida $V_i$, el elemento en la posici'on $f(V_i) + 1$
+    es el primer movimiento no v'alido de la secuencia. Las abejas exploradoras tratan de modificar
+    este movimiento por otro que sea v'alido, si no existe ning'un movimiento posible v'alido
+    entonces $V_i$ es una soluci'on sub'optima (est'a por debajo del l'imite actual y no hay manera
+    de que se incremente), por lo que es descartada y reemplazada por una nueva
+    fuente de comida generada aleatoriamente. En caso de que s'i exista un movimiento v'alido se realiza la
+    modificaci'on a $V_i$ cambiando 'unicamente ese valor. \\
+
+    Adicionalmente a esto, la fuente de comida con mayor fitness value tambi'en se trata de extender (buscando el primer
+    movimiento inv'alido y sustituyendolo), sin embargo, en caso de no poder extenderse m'as no se descarta, pues
+    es potencialmente la soluci'on global.
+
+
     El flujo de ejecuci'on se puede observar como
+
 
 
 
