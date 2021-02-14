@@ -117,4 +117,6 @@ Por ejemplo, para un tablero de 3x3 los
 pares para cada posición son los siguientes
 ![alt text](./reporte/images/tablero_posiciones.png "Posiciones en un tablero 3x3")
 
-<img src="https://github.com/ciencias-unam/proyecto-final-VladimirSierra/blob/main/reporte/images/tablero_posiciones.png" alt="drawing" width="200"/>
+<center>
+<img src="https://github.com/ciencias-unam/proyecto-final-VladimirSierra/blob/main/reporte/images/tablero_posiciones.png" alt="drawing" width="50%"/>
+</center>
