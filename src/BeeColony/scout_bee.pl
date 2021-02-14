@@ -1,10 +1,22 @@
 :- [movements].
 :- [compute].
 
+
+/*
+ * scout_bees_job(L, N, Pos_inicial, Z).
+ * Predicado que es true si L es la lista de fuentes de comida, N la longitud del tablero y Pos_inicial la posicion de
+ * inicio, Z es el resultado de modificar los elementos de L para extender soluciones y eliminar soluciones no optimas.
+ */
 scout_bees_job(L, N, Pos_inicial, Z):-
     path_with_max_fitness(L, N, Pos_inicial, (Limit,_) ),
     scout_job_aux(L, N, Pos_inicial, Limit, Z).
 
+
+/*
+ * scout_job_aux( L, N, Pos_inicial, Limit, Z).
+ * Predicado que es true si L es la lista de todas las fuentes de comida, Limit el fitness value maximo en esa iteracion,
+ * Z es el resultado de actualizar las fuentes en L en un tablero de NxN con posicion inicial Pos_inicial.
+*/
 scout_job_aux([], _ , _, _, []).
 scout_job_aux([H|T], N, Pos_inicial, Limit, Z):-
     scout_job_aux(T, N, Pos_inicial, Limit, Z1),
@@ -12,26 +24,37 @@ scout_job_aux([H|T], N, Pos_inicial, Limit, Z):-
     Z = [H1| Z1].
 
 
-
+/*
+ * scout_update_sequence( L, N, Pos_inicial, Limit, Z).
+ * Predicado que es true si Z es el resultado de modificar la secuencia de patrones de moivmientos L con la estrategia de
+ * abeja exploradora en un tablero de NxN y posicon inicial Pos_inicial, Limit es el fitness value maximo en ese punto.
+*/
 scout_update_sequence(Secuence, N, Pos_inicial, Limit, New_secuence):-
     extend_solution(Secuence, N, Pos_inicial,Limit, New_secuence),!.
 
+%- Caso cuando no se puede extender mas la solucion y esta por debajo del limite.
 scout_update_sequence(Secuence, N, Pos_inicial, Limit, New_secuence):-
     \+ extend_solution(Secuence, N, Pos_inicial,Limit,  _),
     random_init(N, New_secuence).
 
 
-
+/*
+ * extend_solution( L, N, Pos_inicial, Limit, Z).
+ * Predicado que es true si L es una secuencia de patrones de movimientos, N la longitud del lado del tablero,
+ * Pos_inicial la posicion de inicio, Limit es el umbral y Z es el resultado de modificar en L los movimientos no validos
+ * para aumentar su fitness value.
+*/
 extend_solution(Sequence, N, Pos_inicial, Limit, New_sequence):-
     %- caso cuando el fitness value ya es el maximo.
     apply_sequence(Sequence, N,  (Pos_inicial, 0, [Pos_inicial]), (_, FV_final, _)),
     FV_final = Limit,
     Limit \= 0,
+    %- obtenemos los movimentos no validos
     take_sublist(1,FV_final, Sequence, Z1),
     Rest is N * N -1 - FV_final,
+    %- los reemplazamos
     random_list(Rest, Z2),
     append(Z1,Z2,New_sequence).
-
 
 extend_solution(Sequence, N, Pos_inicial,Limit, New_sequence):-
     %- caso cuando se puede aumentar el fitness value actual
@@ -50,6 +73,13 @@ extend_solution(Sequence, N, Pos_inicial,Limit, New_sequence):-
 
 
 
+/*
+ * apply_sequence( L, N, (P1, F1, V1) , (Pf , Ff, Vf) ).
+ * Predicado que es true si L es la lista de patrones de movimientos, N la longitud del tablero,
+ * P1 es la posicion inicial, F1 es el fitness value asociado hasta ese punto, V1 es la lista de casillas visitadas
+ * hasta ese momento, Pf es la posicion final luego de aplicar los movimientos validos, Ff el fitness value final y
+ * Vf las casillas visitadas luego de aplicar los movimientos validos en L.
+*/
 apply_sequence([], _, R, R ).
 
 apply_sequence( [H |T], N,  (Pos1, FV1, Visited1), (Pos_final, FV_final, Visited_final )):-
