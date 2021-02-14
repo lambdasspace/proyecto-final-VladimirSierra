@@ -102,7 +102,7 @@ Tener instalado SWI-Prolog 8.
     superior izquierda, haciendo 100 iteraciones con 32
     agentes la consulta es la siguiente
     
-        ?- bee_algorithm(3, (1,1) , 100 , 32, Z).
+        ?- bee_algorithm(5, (3,3) , 100 , 32, Z).
  
     El resultado es de la forma
     
