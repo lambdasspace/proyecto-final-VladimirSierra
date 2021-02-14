@@ -8,7 +8,9 @@ Dado un tablero de NxN y una posición inicial se desea encontrar
 el camino más largo con movimientos válidos (movimientos del caballo) de tal manera que 
 cada casilla es visitada a lo más una vez.
 
+## Requisitos del sistema.
 
+Tener instalado SWI-Prolog 8.
 
 ## Cómo ejecutar el programa.
 
