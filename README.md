@@ -115,8 +115,18 @@ del lado del tablero).
 
 Por ejemplo, para un tablero de 3x3 los
 pares para cada posición son los siguientes
-![alt text](./reporte/images/tablero_posiciones.png "Posiciones en un tablero 3x3")
 
-<center>
-<img src="https://github.com/ciencias-unam/proyecto-final-VladimirSierra/blob/main/reporte/images/tablero_posiciones.png" alt="drawing" width="50%"/>
-</center>
+<img src="https://github.com/ciencias-unam/proyecto-final-VladimirSierra/blob/main/reporte/images/tablero_posiciones.png" alt="drawing" width="35%"/>
+
+
+Un recorrido se representa con una lista, donde cada elemento
+es una posición del tablero. El orden en que se visitan las
+posiciones se lee de izquierda a derecha en la lista.
+
+Por ejemplo, dado el recorrido
+
+
+<img src="https://github.com/ciencias-unam/proyecto-final-VladimirSierra/blob/main/reporte/images/recorrido1.png" alt="drawing" width="35%"/>
+
+
+su representación es: [ (1,1)  , (2,3), (3,1) ].
