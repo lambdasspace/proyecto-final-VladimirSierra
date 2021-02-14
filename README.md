@@ -15,8 +15,14 @@ cada casilla es visitada a lo más una vez.
 **Nota:** le recomendamos leer la sección de Representación de la información para interpretar correctamente los resultados.
 
 <hr style="border:2px solid blue"> </hr>
+
 ### Ejecución de solución con fuerza bruta.
 
+```diff
+- text in red 
+- **Warning:** no utilice tableros de longitud mayor a 5x5 con este método, pues el tiempo 
+  de ejecición requerido es muy grande.
+```
 <span style="color:red">**Warning:** no utilice tableros de longitud mayor a 5x5 con este método, pues el tiempo 
 de ejecición requerido es muy grande. </span>
 
@@ -46,6 +52,7 @@ de ejecición requerido es muy grande. </span>
     representa el camino. 
      
 <hr style="border:2px solid blue"> </hr>
+
 ### Ejecución de solución con heurística.
 
 1. Ingrese a la carpeta src/Busqueda.
