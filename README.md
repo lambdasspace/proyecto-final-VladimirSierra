@@ -18,14 +18,12 @@ cada casilla es visitada a lo más una vez.
 
 ### Ejecución de solución con fuerza bruta.
 
-```diff
-- text in red 
-- Warning: no utilice tableros de longitud mayor a 5x5 con este método, pues el tiempo de ejecición requerido es muy grande.
-```
-<p style='color:red'>This is some red text.</p>
 
-<span style="color:red">**Warning:** no utilice tableros de longitud mayor a 5x5 con este método, pues el tiempo 
-de ejecición requerido es muy grande. </span>
+<p>
+&#x1F53A; <b> Warning: </b>  no utilice tableros de longitud mayor a 5x5 con este método, pues el tiempo 
+          de ejecición requerido es muy grande. 
+</p>
+&nbsp;
 
 
 1. Ingrese a la carpeta src/Busqueda.
