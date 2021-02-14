@@ -63,14 +63,21 @@ extend_solution(Sequence, N, Pos_inicial,Limit, New_sequence):-
     %- Obtenemos el primer movimiento invalido
     nth0(FV_final, Secuense, Replace ),
     %- Buscamos un patro de movimiento distinto para aumentar el futness value
-    between(1,8, New_pattern),
-    New_pattern \= Replace,
+    random_patter(Replace, New_pattern),
     valid_move(Visited_final, Pos_final, New_pattern, N, _),
     %- Obtenemos la nueva secuencia reemplazando el viejo patron de movimento por el nuevo
     replace(FV_final, Secuense, New_pattern, New_sequence).
 
 
-
+/*
+ * random_patter(Dif, Z).
+ * Predicado que es true si Z es un numero en el rango [1, 8] y es diferente a Dif.
+*/
+random_patter(Dif, Z):-
+    random_permutation([1,2,3,4,5,6,7,8], Z1),
+    member(Z2,Z1),
+    Z2 \= Dif,
+    Z = Z2.
 
 
 /*
