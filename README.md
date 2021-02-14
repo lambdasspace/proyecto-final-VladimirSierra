@@ -14,7 +14,7 @@ cada casilla es visitada a lo más una vez.
 
 **Nota:** le recomendamos leer la sección de Representación de la información para interpretar correctamente los resultados.
 
-
+<hr style="border:2px solid blue"> </hr>
 ### Ejecución de solución con fuerza bruta.
 
 <span style="color:red">**Warning:** no utilice tableros de longitud mayor a 5x5 con este método, pues el tiempo 
@@ -45,7 +45,7 @@ de ejecición requerido es muy grande. </span>
     El primer elemento del par indica la longitud del camino, mientras que el segundo elemento es una lista que 
     representa el camino. 
      
-    ======
+<hr style="border:2px solid blue"> </hr>
 ### Ejecución de solución con heurística.
 
 1. Ingrese a la carpeta src/Busqueda.
@@ -72,7 +72,7 @@ de ejecición requerido es muy grande. </span>
     El primer elemento del par indica la longitud del camino, mientras que el segundo elemento es una lista que 
     representa el camino. 
         
-    ======
+<hr style="border:2px solid blue"> </hr>
         
 ### Ejecución de solución con ABC.
 
@@ -103,7 +103,7 @@ de ejecición requerido es muy grande. </span>
     El primer elemento del par indica la longitud del camino, mientras que el segundo elemento es una lista que 
     representa el camino. 
     
-    ======
+<hr style="border:2px solid blue"> </hr>
     
 ## Representación de la información.
 
@@ -116,3 +116,5 @@ del lado del tablero).
 Por ejemplo, para un tablero de 3x3 los
 pares para cada posición son los siguientes
 ![alt text](./reporte/images/tablero_posiciones.png "Posiciones en un tablero 3x3")
+
+<img src="https://github.com/ciencias-unam/proyecto-final-VladimirSierra/blob/main/reporte/images/tablero_posiciones.png" alt="drawing" width="200"/>
