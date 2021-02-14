@@ -11,7 +11,7 @@ find_max_length(N , Pos_inicial, Z):-
     aggregate_all(max(X, Path), X , length_path([Pos_inicial], Pos_inicial, N, X, Path), Z1),
     %- este match es solo para darle un formato de salida mas limpio
     Z1 = max(Z2, Z3),
-    Z = (Z2,Z3).
+    Z = (Z2, [Pos_inicial|Z3]).
 
 
 /*
