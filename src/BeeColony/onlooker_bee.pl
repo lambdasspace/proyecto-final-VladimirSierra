@@ -8,7 +8,10 @@ onlooker_bees_job(L, N, Pos_inicial,  Z):-
     Sum_fit > 0,
     get_all_fit_values(L, N , Pos_inicial, Fit_vals),
     onlooker_selection(L, Fit_vals, Sum_fit, Num_bees, L2 ),!,
-    update_all_solutions(L2 , L, N, Longitud,Pos_inicial, Z).
+    list_to_set(L2,L3),
+    subtract(L, L3, L4),
+    update_all_solutions(L3 , L, N, Longitud,Pos_inicial, Z1),
+    append(L4,Z1,Z).
 
 
 onlooker_bees_job(L, N, Pos_inicial,  Z):-
@@ -58,6 +61,9 @@ select_with_prob_aux(Ran, [H|T], [PH|PT], Z):-
         select_with_prob_aux(Ran2, T, PT, Z)
         )
     ).
+
+
+
 
 onlooker_update_all_solutions([],_, _, _, _, _, []).
 onlooker_update_all_solutions([H|T], Complete_list, N, Longitud, Pos_inicial, Sum_fit, Z):-
