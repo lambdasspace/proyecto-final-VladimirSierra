@@ -33,7 +33,7 @@
 
 % Title
 \title{Solución al Problema del Recorrido del Caballo
-    utilizando Artifitial Bee Colony.}
+    utilizando Artifitial Bee Colony y Prolog.}
 \author{Sierra Casiano Vladimir}
 
 % Document
@@ -141,7 +141,7 @@
 
 
 
-    \section{Soluci'on.}
+    \section{Desarrollo.}
 
     \subsection{Representaci'on de la informaci'on.}
     Para todos los m'etodos propuestos a continuaci'on es importante
@@ -156,10 +156,27 @@
         Por ejemplo, para un tablero de $3\times 3$ los
         pares para cada posici'on son los siguientes
 
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.25]{tablero_posiciones.png}
+            \caption{Representaci'on de las posiciones en un tablero de $3\times 3$}
+            \label{fig: posiciones}
+        \end{figure}
+
+
+
         \item Un recorrido se representa con una lista, donde cada elemento
         es una posici'on del tablero. El orden en que se visitan las
         posiciones se lee de izquierda a derecha en la lista.\\
         Por ejemplo, dado el recorrido
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.25]{recorrido1.png}
+            \caption{Ejemplo de secuencia de movimientos.}
+            \label{fig:recorrido1}
+        \end{figure}
+
 
         su representaci'on es: $[ (1,1) \; ,\; (2,3),\; (3,1) ]$
 
@@ -199,6 +216,8 @@
 
     \subsection{Adaptando Artifitial Bee Colony para resolver el problema.}
 
+    \subsubsection{Representaci'on de las fuentes de comida.}
+
     El algoritmo ABC est'a planteado originalmente para problemas con valores continuos. Como nuestro problema es discreto
     se deben realizan unas adaptaciones.
 
@@ -211,19 +230,51 @@
 
 
     Las posibles  soluciones para un tablero de $N \times N$
-    se representan con una lista de longitud $(N^{2}) -1 $, donde
+    se representan con una lista de longitud $N^{2} -1 $, donde
     cada elemento de la lista es un n'umero entre $1$ y $8$.
 
-    La definici'on de nuestra funci'on fitness es la siguiente:
-    $$f(x) =  $$
+    \subsubsection{Funci'on fitness.}
+
+    La definici'on de nuestra funci'on fitness est'a dada recursivamente:
+
+    \begin{equation} \label{eq: fitness}
+        \begin{split}
+            f(\; [\;] \;) &= 0 \\
+            f( x:xs ) &= \begin{cases}
+                            1 + f(xs) &\text{si $x$ es un movimiento v'alido}\\
+                            0 &\text{si $x$ es un movimiento inv'alido }
+            \end{cases}
+        \end{split}
+    \end{equation}
+
+    Observe que con esta definici'on entre m'as grande es el valor de la funci'on fitness m'as
+    largo es el recorrido que representa la lista.
+
+    \subsubsection{Actualizaci'on de las soluciones.}
 
     Para actualizar la posici'on de una fuente de comida $V_{1}$, primero se
     escoge aleatoriamente una fuente de comida distinta $V_{2}$ , el intercambio
     de informaci'on se realiza obteniendo cuatro fragmentos como se ilustra en
     la siguiente imagen
 
-    Los puntos de corte son escogidos aleatoriamente.
+    Los puntos de corte son escogidos aleatoriamente.\\
+    Recuerde que en todo momento se mantiene una estrategia greedy, cuando la posici'on de una fuente de comida muta se comprueba
+    si el valor de la funci'on fitness se incrementa o no, en caso de que no se incremente se descartan los cambios.
 
+    \subsubsection{Labor de las abejas empleadas.}
+
+    \subsubsection{Labor de las abejas observadoras.}
+
+    \subsubsection{Labor de las abejas exploradoras.}
+
+    \subsubsection{Algoritmo.}
+    El flujo de ejecuci'on se puede observar como
+
+
+
+    \section{Resultados.}
+    Las siguientes gr'aficas representan los resultados de ejecutar 50 repeticiones en posiciones distintas
+    para tableros de longitud $8 \times 8$.
 
     \section{Conclusiones.}
     Como podemos observar en el an'alisis de resultados la fuerza bruta
