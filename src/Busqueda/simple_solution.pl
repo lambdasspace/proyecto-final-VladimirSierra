@@ -1,12 +1,12 @@
 :- set_prolog_flag(answer_write_options,[max_depth(0)]).
 
 /*
- * find_max_length( Pos_inicial, N, Z).
+ * find_max_length( N, Pos_inicial,  Z).
  * Predicado que es true si Pos_inicial es un par que representa la posicion de inicio, N es la longitud
  * del lado del tablero y Z es un par de la forma (L, P) donde L es la longitud del camino P, y P es el
  * camino mas largo posible con movimientos del caballo sin repetir casillas.
 */
-find_max_length( Pos_inicial, N , Z):-
+find_max_length(N , Pos_inicial, Z):-
     %- se buscan todos los caminos guardando el de maxima longitud siempre
     aggregate_all(max(X, Path), X , length_path([Pos_inicial], Pos_inicial, N, X, Path), Z1),
     %- este match es solo para darle un formato de salida mas limpio
