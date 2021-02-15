@@ -66,76 +66,13 @@ count_adjacent_unvisited( (X,Y), N, Visited, Z):-
     %- guardamos en Z1 las casillas adyacentes a (x,y) que no hayan sido visitadas
     bagof( C,
             (
-                adjacent_square( (X,Y), N, C),
+                movement( (X,Y), N, C),
                 not(member(C, Visited))
             ),
          Z1),
     %- contamos las casillas que cumplieron con la condicion
     length(Z1, Z).
 
-
-/*
- * adjacent_square( (X,Y) , N, Z).
- * Predicado que es true si (X,Y) es una posicion en el tablero de NxN, y Z es una casilla adyacente a (X,Y).
-*/
-adjacent_square( (X,Y), N, Z):-
-    X2 is X -1,
-    Y2 is Y -1,
-    X2 >= 1,
-    Y2 >= 1,
-    X2 =< N,
-    Y2 =< N,
-    Z = (X2,Y2).
-
-adjacent_square( (X,Y), N, Z):-
-    Y2 is Y -1,
-    Y2 >= 1,
-    Y2 =< N,
-    Z = (X,Y2).
-
-adjacent_square( (X,Y), N, Z):-
-    X2 is X + 1,
-    Y2 is Y -1,
-    X2 >= 1,
-    Y2 >= 1,
-    X2 =< N,
-    Y2 =< N,
-    Z = (X2,Y2).
-
-adjacent_square( (X,Y), N, Z):-
-    X2 is X -1,
-    X2 >= 1,
-    X2 =< N,
-    Z = (X2,Y).
-
-adjacent_square( (X,Y), N, Z):-
-    X2 is X + 1,
-    X2 >= 1,
-    X2 =< N,
-    Z = (X2,Y).
-
-adjacent_square( (X,Y), N, Z):-
-    X2 is X - 1,
-    Y2 is Y + 1,
-    X2 >= 1,
-    Y2 >= 1,
-    X2 =< N,
-    Y2 =< N,
-    Z = (X2,Y2).
-
-adjacent_square( (X,Y), N, Z):-
-    Y2 is Y + 1,
-    Y2 >= 1,
-    Y2 =< N,
-    Z = (X,Y2).
-adjacent_square( (X,Y), N, Z):-
-    X2 is X + 1,
-    Y2 is Y + 1,
-    X2 >= 1,
-    Y2 >= 1,
-    X2 =< N,
-    Y2 =< N,
-    Z = (X2,Y2).
 
 
 /*
