@@ -46,4 +46,3 @@ bee_alg_aux(Partial_solutions, N, Pos_inicial, Repeticiones, Z):-
 
 
 
-my_append(A-B, B, A).
