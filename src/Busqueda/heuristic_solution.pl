@@ -46,14 +46,14 @@ warnsdorff_rule((X,Y), N, Visited, Z):-
  * warnsdorff_rule_aux( L , N, Visited, Z).
  * Predicado auxiliar que es true si L es la lista de potenciales siguientes casillas a visitar, N es la longitud
  * del lado del tablero, Visited es la lista de casillas visitadas hasta ese momento, y Z es el elemento de L
- * que tiene una mayor cantidad de casillas adyacentes no visitadas.
+ * que tiene una menor cantidad de casillas adyacentes no visitadas.
 */
 warnsdorff_rule_aux([X], _ , _, X):- !.
 warnsdorff_rule_aux([H|T], N, Visited, Z):-
     warnsdorff_rule_aux(T,N,Visited, Z1),
     count_adjacent_unvisited(Z1, N, Visited, C1),
     count_adjacent_unvisited(H, N, Visited, C2),
-    (C1 > C2 -> Z =Z1 ;  Z = H ).
+    (C1 > C2 -> Z = H ;  Z = Z1 ).
 
 
 
