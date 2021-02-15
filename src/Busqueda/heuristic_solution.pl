@@ -74,17 +74,6 @@ count_adjacent_unvisited( (X,Y), N, Visited, Z):-
     length(Z1, Z).
 
 
-
-/*
- * next_move( Visited, Pos, N, New_pos).
- * Predicado que es true si Visited es la lista de posiciones visitadas hasta ese momento, Pos es la posicion actual,
- * N el tamanio del lado del tablero y New_pos es una posicion a la que se llega con un movimiento valido.
-*/
-next_mov( Visited, Pos, N, NewPos) :-
-    movement(Pos, N, NewPos),
-    not(member(NewPos, Visited)).
-
-
 /*
  * movement( (X,Y), N, R ).
  * Predicado que es true si (X, Y) es la posicion en el tablero, N el tamanio del lado del tablero y R es

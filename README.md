@@ -1,5 +1,4 @@
-# IMPLEMENTACION AUN EN MODIFICACION. NO LA TOME EN CUENTA COMO ENTREGA FINAL.
-# The Knight's Tour
+# Warnsdorff vs Artificial Bee Colony para resolver The Knight's Tour Problem.
 
 ## Alumno: Sierra Casiano Vladimir
 
@@ -75,8 +74,8 @@ Tener instalado SWI-Prolog 8.
         
     El resultado es de la forma
     
-        Z =  (13,[(3,3),(4,5),(2,4),(3,2),(4,4),(5,2),(3,1),(2,3),(4,2),(5,4),(3,5),(1,4),(2,2),(3,4)]).
-
+        Z =  (24,[(3,3),(1,2),(3,1),(5,2),(4,4),(2,5),(1,3),(2,1),(4,2),(5,4),(3,5),(1,4),(2,2),(4,1),(5,3),(4,5),(2,4),(4,3),(5,1),(3,2),(1,1),(2,3),(1,5),(3,4),(5,5)]).
+  
     El primer elemento del par indica la longitud del camino, mientras que el segundo elemento es una lista que 
     representa el camino. 
         

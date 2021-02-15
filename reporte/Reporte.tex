@@ -20,6 +20,7 @@
 \addbibresource{bibliography/Watkins.bib}
 \addbibresource{bibliography/Gulumbic2021.bib}
 \addbibresource{bibliography/Anan.bib}
+\addbibresource{bibliography/Pranav.bib}
 
 
 %----- Para no poner sangria ----------------
@@ -31,10 +32,14 @@
 \usepackage{hyperref}
 \graphicspath{ {./images/} }
 
+%-- comandos personalizados
+\newcommand{\bigo}{\mathcal{O}}
+
+\usepackage{dirtree}
 
 % Title
-\title{Solución al Problema del Recorrido del Caballo
-    utilizando Artifitial Bee Colony y Prolog.}
+\title{ Dos algoritmos para resolver el Problema del Recorrido del Caballo
+    utilizando Prolog.}
 \author{Sierra Casiano Vladimir}
 
 % Document
@@ -45,9 +50,9 @@
     \begin{abstract}
         Para el presente proyecto se abordar'a una variante del Problema del Recorrido del
         Caballo.
-        Se presentar'an dos maneras para encontrar soluciones
+        Se presentar'an dos maneras (a comparar) para encontrar soluciones
         'optimas, la primera es utilizando la regla de Warnsdorff, y la segunda
-        es adaptando el algoritmo bioinspirado Artifitial Bee Colony. Ambas
+        es adaptando el algoritmo bioinspirado Artificial Bee Colony. Ambas
         soluciones tendr'an un enfoque declarativo.
     \end{abstract}
 
@@ -60,7 +65,7 @@
     El problema data a mediados del Siglo VI en la India \cite{watkins} (muy cerca del
     origen del ajedrez) y ha sido muy estudiado a lo largo de la historia por
     celebres matem'aticos como
-    Leonard Euler, quien enunci'o el problema de la siguiente manera:
+    Euler, quien enunci'o el problema de la siguiente manera:
     \textit{ ?`C'omo se pueden encontrar todas las secuencias de movimientos de
     la pieza del caballo en un tablero de ajedrez de tal manera que cada casilla del
     tablero es visitada exactamente una vez?
@@ -96,19 +101,19 @@
     y visitando cada casilla a lo m'as una vez.
 
 
-    \subsection{Artifitial Bee Colony.}\label{section:bee_colony}
-    Los algoritmos gen'eticos est'an inspirados en el comportamiento de
-    agentes biol'ogicos.
+    \subsection{Artificial Bee Colony.}\label{section:bee_colony}
 
-    El algoritmo Bee Colony fue propiesto en el a'no por el investigador InvestigadorName,
-    y el funcionamiento intuitivo es el siguiente.
+    El algoritmo Artificial Bee Colony (ABC) fue propuesto en el a'no 2005  por el  Dervis Karaboga,
+    y est'a inspirado en el comportamiento de abejas mel'iferas para encontrar fuentes de comida de calidad. Es uno de
+    los algoritmos bioinspirados m'as populares para problemas de optimizaci'on num'erica \cite{anan}.
+    En esta secci'on describiremos brevemente su funcionamiento.
 
     \textbf{Componentes.}
     \begin{itemize}
         \setlength\itemsep{0em}
         \item Abejas, que se dividen en tres tipos: empleadas, observadoras y exploradoras.
         \item Se tiene un mismo n'umero de abejas de cada tipo.
-        \item Fuentes de comida, que representa una posible soluci'on a el problema.
+        \item Fuentes de comida, que representa una posible soluci'on al problema.
         \item Cada abeja empleada es encargada de una fuente de comida (es decir, tenemos el mismo n'umero de fuentes
                 de comida que de abejas empleadas).
         \item Hay una funci'on fitness, que eval'ua la calidad de una fuente de comida.
@@ -120,7 +125,7 @@
         \item Se repite un n'umero definido de veces los siguientes pasos
             \begin{itemize}
                 \setlength\itemsep{0em}
-                \item Todas las abejas empleadas buscan una abeja compa'ra para compartir informaci'on y actualizar
+                \item Todas las abejas empleadas buscan una abeja compa'nera para compartir informaci'on y actualizar
                     la fuente de comida.
                 \item Las abejas observadoras toman las fuentes de comida de las abejas empleadas, y seleccionan
                     solo a algunas para actualizar su informaci'on.
@@ -143,15 +148,15 @@
     En Prolog la informaci'on es manejada con hechos y reglas de producci'on.
 
     Como observaremos en la secci'on ~\ref{section: desarrollo}, una considerable cantidad de operaciones
-    que se requieren para los algoritmos consisten en
+    que se requieren para los algoritmos desarrollados en este proyecto consisten en
     \begin{itemize}
         \item Verificar que se cumplan condiciones (por ejemplo, para mutar informaci'on).
         \item Explorar varias posibilidades en un mismo punto (por ejemplo, explorar los posibles movimientos).
     \end{itemize}
 
     Ambas caracter'isticas est'an intimamente ligadas a la filosof'ia de Prolog, que nos regala la exploraci'on a trav'es
-    de su 'arbol de resoluci'on y adem'as tiene el bactracking ya implementado. De igual manera, el enfoque
-    procedimental de Prolog consiste en encontrar sustituciones para hacer verdaderos a los predicados.
+    de su 'arbol de resoluci'on y adem'as tiene el bactracking ya implementado. Estos aspectos hacen que una
+    implementaci'on en este lenguaje sea atractiva.
 
 
 
@@ -166,15 +171,15 @@
     \begin{itemize}
         \item La posici'on en el tablero es un par  $\mathbf{(X,Y)}$ , donde
         $X$ es el n'umero de la columna y $Y$ el n'umero del rengl'on.
-        Ambos valores est'an en un ranto entre $1$ y $N$ (longitud
+        Ambos valores est'an en un rango entre $1$ y $N$ (longitud
         del lado del tablero). \\
         Por ejemplo, para un tablero de $3\times 3$ los
         pares para cada posici'on son los siguientes
 
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.25]{tablero_posiciones.png}
-            \caption{Representaci'on de las posiciones en un tablero de $3\times 3$}
+            \includegraphics[scale=0.22]{tablero_posiciones.png}
+            \caption{Representaci'on de las posiciones en un tablero de $3\times 3$.}
             \label{fig: posiciones}
         \end{figure}
 
@@ -187,7 +192,7 @@
 
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.25]{recorrido1.png}
+            \includegraphics[scale=0.22]{recorrido1.png}
             \caption{Ejemplo de secuencia de movimientos.}
             \label{fig:recorrido1}
         \end{figure}
@@ -204,20 +209,28 @@
     \subsection{Tratando de resolver el problema con fuerza
     bruta.}
 
-    La primera soluci'on propuesta es utilizando una b'usqueda DFS y backtracking.
-    La exploraci'on es exhaustiva, con DFS se est'an recorriendo todos los caminos posibles, el backtracking
-    es el encargado de volver a puntos anteriores.
+    La soluci'on m'as siple en la que podemos pensar es recorrer todos los caminos posibles, y al final elegir
+    el m'as largo. Esto se puede hacer utilizando una b'usqueda DFS y backtracking.
+
 
     El 'arbol de posibles movimientos y el backtracking es manejado
     gracias a Prolog, pues el recorrido DFS corresponde
-    a la exploraci'on que hace Prolog en el 'arbol de resoluci'on.
+    a la exploraci'on que hace Prolog en el 'arbol de resoluci'on. Mientras que el backtracking nos permite volver a posiciones anteriores
+    para explorar otro posible camino.
 
+    Potencialmente, tenemos que elegir entre 8 casillas (a las que se puede mover) en cada paso.
+    Como el n'umero de casillas es $N^2$  el recorrer todos los caminos tiene una complejidad de
+    $\bigo( 8^{N^2} ) $.
 
+    \begin{figure}[H]
+        \centering
+        \fbox{ \includegraphics[scale=0.13]{tree1.png} }
+        \caption{Primer nivel del 'arbol de b'usqueda para un tablero $5 \times 5$. }
+        \label{fig:tree1}
+    \end{figure}
 
-    Con prolog hacemos una b'usqueda DFS, y al final tomamos
-    el recorrido con la mayor longitud.
-
-    Explorar todos los caminos es inviable, para reducir el espacio
+    Explorar todos los caminos es inviable, la capacidad de las  computadoras de hoy en d'ia es superada para un tablero
+    de $8\times 8$. Para reducir el espacio
     de b'usqueda (y entonces obtener resultados en un tiempo razonable)
     se pueden utilizar muchos m'etodos, uno relativamente
     simple es el descrito en la secci'on siguiente.
@@ -226,20 +239,48 @@
 
     \subsection{Soluci'on con la regla de Warnsdorff.}
     En 1823  H.C. Warnsdorff propus'o una heur'istica muy eficiente para afrontar el problema, a dicha heur'istica se le conoce
-    como regla de Warnsdorff. Cabe mencionar que como se trata de una heur'istica no se puede garantizar que
+    como regla de Warnsdorff \cite{pranav} . Aunque la heur'istica fue propuesta para el problema original (encontrar el camino que pasa por todas
+    las casillas) para nuestra variante tambi'en funciona, pues maximiza la longitud de los recorridos.
 
-    Para decidir el siguiente movimiento
-    se observan las casillas a las que se puede ir con un movimiento v'alido (movimento del caballo y casilla no visitada previamente),
-    para cada una se cuentan la cantidad de casillas adyacentes que no hayan sido visitadas.
-    El movimiento siguiente es a la casilla que tenga la menor cantidad de casillas adyacentes no visitadas.
+    Llamamos una casilla adyacente a una casilla a la cual se puede ir desde la posici'on actual con un movimiento del caballo.
+
+    Para decidir el siguiente movimiento primero se observan las casillas adyacentes a la actual, para cada una de ella se obtiene la
+    cantidad de casillas adyacentes no visitadas, al final se elige aquella con la menor cantidad.\\
+    Entonces el siguiente movimiento debe ser a
+    aquella casilla adyacente no vistada que tenga la menos cantidad de casillas adaycentes no visitadas.
+
+    Por ejemplo, en la siguiente imagen la pieza del caballo est'a en su posici'on inicial, sus casillas adyacentes
+    tienen el n'umero entero correspondiente a la cantidad de casillas adyacentes no visitadas. El siguiente movimiento siguiendo la regla
+    de Warnsdorff es hacia la casilla con el valor 2.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.5]{warnsdorff.png}
+        \caption{Ejemplo de regla de Warnsdorff.}
+        \label{fig:warnsdorff}
+    \end{figure}
+
+    El 'arbol de resoluci'on de Prolog entonces ya no tiene que desarrollar las ramas para todos los posibles movimientos, con la heur'istica escogemos solo uno y sobre
+    esa rama seguimos desarrollando.
+
+    Por ejemplo, para un tablero de $5 \times 5$ con posici'on inicial $(3,3)$ el desarrollo de los primeros movimientos con la heur'istica
+    puede ser observado en el siguiente 'arbol \footnote{El 'arbol de la imagen no muestra todo el desarrollo de Prolog, solo es una versi'on simplificada
+    para observar la reducci'on de ramas.}.
+
+    \begin{figure}[H]
+        \centering
+        \fbox{ \includegraphics[scale=0.25]{tree2.png} }
+        \caption{Primeros tres niveles del 'arbol de b'usqueda con heur'istica.}
+        \label{fig:tree2}
+    \end{figure}
 
 
-    \subsection{Adaptando Artifitial Bee Colony para resolver el problema.}
+    \subsection{Adaptando Artificial Bee Colony para resolver el problema.}
 
     \subsubsection{Representaci'on de las fuentes de comida.}
 
     El algoritmo ABC est'a planteado originalmente para problemas con valores continuos. Como nuestro problema es discreto
-    se deben realizan unas adaptaciones.
+    se deben realizan unas adaptaciones. La siguiente adaptaci'on est'a basada en la propuesta de Banharnsakun \cite{anan}.
 
 
     Los 8 patrones de movimiento del caballo se identificar'an con un n'umero:
@@ -263,9 +304,9 @@
         \label{fig:food_source1}
     \end{figure}
 
-    El significado operacional de esta secuencia es, dada la posici'on inicial, aplicar el patr'on de movimento
+    El significado operacional de esta secuencia es, dada la posici'on inicial, aplicar el patr'on de movimiento
     que se encuentra en la cabeza de la lista, una v'ez llegada a la posici'on destino aplicar el
-    patr'on de movimiento que guarda el siguiente elemento de la lsita. \\
+    patr'on de movimiento que guarda el siguiente elemento de la lista. \\
     Es claro que las listas pueden guardar movimientos inv'alidos, es decir, al aplicar
     el patr'on de movimiento se regresa a una casilla previamente visitada o se sale del tablero. \\
     El objetivo del algoritmo es entonces maximizar los movimientos v'alidos.
@@ -284,16 +325,16 @@
             \end{cases}
         \end{split}
     \end{equation}
-
+    Decimos que la fuente de comida $V_i$ tiene un valor fitness de $f(V_i)$.\\
     Observe que con esta definici'on entre m'as grande es el valor de la funci'on fitness m'as
     largo es el recorrido que representa la lista.
 
     \subsubsection{Actualizaci'on de las soluciones.}\label{section: merge}
 
-    Para actualizar la posici'on de una fuente de comida $V_{1}$, primero se
+    Para actualizar una fuente de comida $V_{1}$, primero se
     escoge aleatoriamente una fuente de comida distinta $V_{2}$ , el intercambio
-    de informaci'on se realiza obteniendo cuatro fragmentos como se ilustra en
-    la siguiente imagen
+    de informaci'on se realiza con tres cortes e intercalando los fragmentos de ambas fuentes, como se ilustra en
+    la siguiente imagen:
 
     \begin{figure}[H]
         \centering
@@ -304,7 +345,7 @@
 
 
     Los puntos de corte son escogidos aleatoriamente.\\
-    Recuerde que en todo momento se mantiene una estrategia greedy, cuando la posici'on de una fuente de comida muta se comprueba
+    Recuerde que en todo momento se mantiene una estrategia glotona, cuando una fuente de comida muta se comprueba
     si el valor de la funci'on fitness se incrementa o no, en caso de que no se incremente se descartan los cambios.
 
 
@@ -312,7 +353,7 @@
     Como mencionamos en la secci'on ~\ref{section:bee_colony}, los trabajos realizados por los tres tipos de abejas
     conforman un ciclo de ejecuci'on.
 
-    \textbf{Abejas empeladas.}\\
+    \textbf{Abejas empleadas.}\\
     Todas las abejas tienen asociada una fuente de comida, de manera aleatoria escogen a una compa'nera y
     actualizan la posici'on de su fuente de comida siguiendo el m'etodo descrito en la subsecci'on ~\ref{section: merge}.
 
@@ -326,13 +367,16 @@
         g( V_i ) =  \dfrac{ f(V_i ) } { \displaystyle \sum_{ V_j \in S } f(V_j) }
     \end{equation}
 
-    Donde $S$ es el conjunto de todas las fuentes de comida y $f$ es la funci'on fitness.
+    Donde $S$ es el conjunto de todas las fuentes de comida y $f$ es la funci'on fitness. \\
+    Cada abeja observadora selecciona una fuente de comida (utilizando $g$), diferentes abejas pueden escoger la misma
+    fuenta. Posteriormente las fuentes de comida seleccionadas se actualizan, siguiendo el mismo m'etodo
+    que las abejas empleadas.
 
     \textbf{Abejas exploradoras.}\\
     Las abejas exploradoras toman todas las fuentes de comida (despu'es de que las observadoras hayan realizado
     sus modificaciones), observan cu'al es el valor m'as grande que toma la funci'on fitness en ese momento para alguna fuente
     de comida,
-    llamemos $fit_{max}$ este valor, y para todas las fuentes de comida cuyo
+    llamemos $fit_{max}$ a este valor, y para todas las fuentes de comida cuyo
     valor fitness asociado sea menor a $fit_{max}$ se trata de extender la soluci'on.\\
     Observe que el valor fitness nos indica la cantidad de movimientos v'alidos, por lo que
     para una fuente de comida $V_i$, el elemento en la posici'on $f(V_i) + 1$
@@ -341,41 +385,70 @@
     entonces $V_i$ es una soluci'on sub'optima (est'a por debajo del l'imite actual y no hay manera
     de que se incremente), por lo que es descartada y reemplazada por una nueva
     fuente de comida generada aleatoriamente. En caso de que s'i exista un movimiento v'alido se realiza la
-    modificaci'on a $V_i$ cambiando 'unicamente ese valor. \\
+    modificaci'on a $V_i$ cambiando 'unicamente ese valor.
 
-    Adicionalmente a esto, la fuente de comida con mayor fitness value tambi'en se trata de extender (buscando el primer
-    movimiento inv'alido y sustituyendolo), sin embargo, en caso de no poder extenderse m'as no se descarta, pues
-    es potencialmente la soluci'on global.
+    Adicionalmente a esto, la fuente de comida con mayor fitness value tambi'en se trata de extender, sin embargo, en caso de no poder extenderse m'as no se descarta, pues
+    es potencialmente la soluci'on global.\\
 
 
-    El flujo de ejecuci'on se puede observar como
+    El flujo de ejecuci'on se puede observar en el siguiente diagrama.
+
+    \begin{figure}[H]
+        \centering
+        \fbox{ \includegraphics[scale=0.28]{flujo.png}}
+        \caption{Flujo de ejecici'on.}
+        \label{fig:flujo}
+    \end{figure}
 
 
 
 
     \section{Resultados.}
-    Las siguientes gr'aficas representan los resultados de ejecutar 50 repeticiones en posiciones distintas
-    para tableros de longitud $8 \times 8$.
+
+    Se realizaron pruebas para tableros de longitud $8 \times 8$, $12\times 12$ y $16 \times 16$ (cinco ensayos por cada uno) con posicione aleatorias.
+    Las medias aritm'eticas tanto del tiempo de ejecuci'on como la longitud del camino m'as largo encontrado se
+    presentan en las siguientes gr'aficas.
+
+    El algoritmo Artificial Bee Colony se ejecut'o con 32 fuentes de comida y 200 iteraciones.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.5]{longitudes.jpg}
+        \caption{Longitud de los caminos resultantes.}
+        \label{fig:longitudes}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.5]{tiempos.jpg}
+        \caption{Tiempos de ejecici'on de las pruebas.}
+        \label{fig:tiempos}
+    \end{figure}
+
+
 
     \section{Conclusiones.}
-    Como podemos observar en el an'alisis de resultados la fuerza bruta
-    resulta poco eficiente debido a la complejidad computacional del problema,
-    para valores muy peque'nos de n (longitud del lado del tablero)
-    el tiempo y poder de c'omputo requerido es inviable. \\
-    De los  dos m'etodos que se presentaron como alternativa
-    fue la implementaci'on de Artifitial Bee Colony la que dio mejores resultados,
-    encontrando caminos m'as largos que la heur'istica de Warnsdorff. \\
+    Como podemos observar en los resultados,
+    de los  dos m'etodos que se presentaron como alternativa
+    fue la implementaci'on de la heur'istica de Warnsdorff la que dio mejores resultados,
+    encontrando caminos m'as largos que ABC y en menos tiempo. \\
+
+    La diferencia en la calidad de las soluci'on fue bastante significativa. Aunque los tiempos de ABC dependan directamente de las iteraciones
+    y fuentes de comida, los tiempos con par'ametros moderados crecen de manera mucho m'as r'apida a comparaci'on de la
+    heur'istica.
 
 
     \section{Trabajo futuro.}
-    Aunque los resultados obtenidos con el algoritmo ABC son satisfactorios
-    hay muchos casos para los que no se encuentra realmente el recorrido m'as largo posible.
-    Para mejorar los resultados se deben realizar modificaciones en alguno de los siguientes puntos
+    Aunque los resultados obtenidos con el algoritmo ABC no son satisfactorios muestra la explotaci'on de ciertos puntos importantes, y
+    con algunas variantes se puede intentar obtener mejores soluciones. \\
+    Para mejorar los resultados se deben realizar modificaciones siguiendo algunos de los siguientes puntos
     \begin{itemize}
         \item Modificar el n'umero de agentes y el n'umero de iteraciones. De manera m'as general
             encontrar las cotas apropiadas para estos
-            valores dependiendo del valor de la variable n.
+            valores dependiendo del valor de la variable N.
         \item Modificar la manera en que se comparte la informaci'on entre los agentes.
+        \item Modificar el proceso de las abejas exploradoras, para tratar de extender de manera m'as inteligente
+            los caminos y evitar repeticiones en la informaci'on.
     \end{itemize}
 
     Ambos puntos requieren un an'alisis profundo, deben ser implementados y probados
@@ -384,20 +457,42 @@
     deben ser tomadas en cuenta para trabajos futuros.
 
 
-    \section{Disponibilidad de la implementaci'on.}
+    \section{Detalles de la implementaci'on.}
+    
+    \subsection{Versi'on.}
+    Todas las implementaciones presentadas fueron realizadas con SWI-Prolog 8.2.4.
 
-    Todas las implementaciones presentadas fueron realizadas en Prolog.
-
-    \subsection{C'omo probar la implementaci'on.}
+    \subsection{Disponibilidad de  la implementaci'on.}
 
     Los archivos relacionados al proyecto se encuentran disponibles
     en el repositorio\\
-    \textbf{
-    https://github.com/ciencias-unam/proyecto-final-VladimirSierra
-    }
+    \href{https://github.com/ciencias-unam/proyecto-final-VladimirSierra }{https://github.com/ciencias-unam/proyecto-final-VladimirSierra}
 
     Le invitamos a leer el archivo README.md para
-    c'onocer las instrucciones precisas de ejecuci'on.
+    conocer las instrucciones precisas de ejecuci'on.
+
+    La estructura del proyecto es:
+    \dirtree{%
+    .1 proyecto-final-VladimirSierra.
+    .2 reporte.
+    .3 bibliography.
+    .3 images.
+    .3 Reporte.tex.
+    .3 Reporte.pdf.
+    .2 src.
+    .3 BeeColony.
+    .4 bee\_colony.pl.
+    .3 Busqueda.
+    .4 heuristic\_solution.pl.
+    .4 simple\_solution.pl.
+    .2 README.md.
+    }
+
+    En la carpeta \textit{ reporte } se encuentra el c'odigo fuente del reporte y su correspondiente pdf. \\
+    En la carpeta \textit{src/BeeColony} se encuentran los archivos de la implementaci'on para ABC. \\
+    En la carpeta \textit{ src/Busqueda } se encuentran dos archivos, uno que implementa la b'usqueda completa (\textit{simple\_solution.pl}), y otro que implementa
+    la b'usqueda con heur'istica (\textit{heuristic\_solution.pl}).
+
 
 
     %- Bibliografia
